@@ -1,0 +1,8 @@
+The `get_limit` function in `src/config.py` resolves a tier's request ceiling by delegating to the `resolve` helper function imported from `vendor/ratelib/limits.py`.
+
+It calls `resolve(TIER_TABLE, tier, DEFAULT_MAX_REQUESTS)`, passing:
+1. `TIER_TABLE`: A dictionary mapping tier names to their limits (e.g., "free": 15, "pro": 100, "ultra": 300), imported from `vendor/ratelib/limits.py`.
+2. `tier`: The name of the tier requested.
+3. `DEFAULT_MAX_REQUESTS`: A fallback limit (currently set to 100).
+
+The `resolve` helper function simply performs a dictionary lookup with a fallback using `table.get(tier, default)`. If the `tier` exists in the `TIER_TABLE`, it returns the associated limit. If the `tier` is not found in the table, it returns the provided default value (`DEFAULT_MAX_REQUESTS`).
